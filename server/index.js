@@ -18,8 +18,8 @@ io.on('connect',(socket) =>{
   //   console.log(name,room);
   // })
   socket.on('join', ({name,room}, callback) =>{
-    console.log("user has joined");
-    console.log(name,room);
+    //console.log("user has joined");
+   // console.log(name,room);
    const{error,user} = addUser({id:socket.id, name, room});
    if(error) return callback (error);
    socket.emit('message',{user: 'admin' ,text: `${user.name}, welcome to the room ${user.room}`});
@@ -36,7 +36,7 @@ io.on('connect',(socket) =>{
 
   });  
   socket.on('disconnect', () =>{
-    console.log('user is disconnected');
+   // console.log('user is disconnected');
     const user = removeUser(socket.id);
     if(user){
       io.to(user.room).emit('message',{user : 'admin', text: `${user.name} has left`})
@@ -45,7 +45,7 @@ io.on('connect',(socket) =>{
 
   )
 })
-// app.use(cors());
+ app.use(cors());
 
 app.use(router);
 server.listen(process.env.PORT || 5000, () => console.log(`Server has started.`));
